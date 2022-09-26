@@ -1,0 +1,1 @@
+ansible demo -b -m yum -a "pkg=httpd state=present"

@@ -3,8 +3,8 @@
 - name: Test morpheus variables 
   hosts: all
   gather_facts: yes
-  become: yes
-  connection: local
+  #become: yes
+  #connection: local
   tasks:
   name: variables from morpheus
   - name: gather facts
@@ -15,4 +15,3 @@
     set_fact:
       fact_one: "{{morpheus | to_json}}"
     ignore_errors: true
-    

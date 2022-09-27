@@ -5,12 +5,14 @@
   gather_facts: yes
   become: yes
   connection: local
-
   tasks:
   name: variables from morpheus
+  - name: gather facts
+    setup:
+    ignore_errors: true
+    register: setup
+  - name: variables from morpheus
     set_fact:
       fact_one: "{{morpheus | to_json}}"
     ignore_errors: true
-  - name: gather facts
-    debug:
-      msg: Hello, world
+    

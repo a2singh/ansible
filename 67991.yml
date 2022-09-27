@@ -7,6 +7,10 @@
   connection: local
 
   tasks:
+  name: variables from morpheus
+    set_fact:
+      fact_one: "{{morpheus | to_json}}"
+    ignore_errors: true
   - name: gather facts
     debug:
-      msg: Hello, world!
+      msg: Hello, world

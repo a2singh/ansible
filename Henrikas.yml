@@ -7,10 +7,10 @@
     setup:
     ignore_errors: true
     register: setup
- # - name: variables from morpheus
-  #  set_fact:
-     # fact_one: "{{morpheus | to_json}}"
-   # ignore_errors: true
+ - name: variables from morpheus
+   set_fact:
+      fact_one: "{{morpheus | to_json}}"
+   ignore_errors: true
   - name: debug setup
     debug:
       var: setup

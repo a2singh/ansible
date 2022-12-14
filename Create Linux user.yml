@@ -5,22 +5,22 @@
   tasks:
   - name: Create a user
     user:
-      name: admin
+      name: apsingh
       groups: wheel
       shell: /bin/bash
       state: present
   - name: Set the password for the user
     user:
-      name: admin
-      password: "{{ 'admin_password_hash' | password_hash('sha512') }}"
+      name: apsingh
+      password: "{{ 'apsingh_password_hash' | password_hash('sha512') }}"
       state: present
   - name: Grant sudo access to the user
     lineinfile:
       dest: /etc/sudoers
-      line: "admin  ALL=(ALL)  NOPASSWD:ALL"
+      line: "apsingh  ALL=(ALL)  NOPASSWD:ALL"
       state: present
   - name: Ensure SSH access is enabled
     lineinfile:
       dest: /etc/ssh/sshd_config
-      line: "AllowUsers admin"
+      line: "AllowUsers apsingh"
       state: present

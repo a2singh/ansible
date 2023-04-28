@@ -1,7 +1,0 @@
-- name: Install Online Software
-  get_url:
-    url:https://downloads.morpheusdata.com/files/morpheus-appliance-5.4.12-2.el7.x86_64.rpm
-    dest: /tmp/installer.exe
-    path: /etc/morpheus/morpheus.rb
-    arguments: '/S'
-    state: present

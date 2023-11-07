@@ -10,3 +10,4 @@
   - name: gather facts
     debug:
       msg: Hello, world!
+({% if 'instance' in morpheus %}{{ morpheus.instance | to_json | safe }}{% else %}{}{% endif %})

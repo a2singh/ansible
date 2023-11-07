@@ -9,5 +9,10 @@
   tasks:
   - name: gather facts
     debug:
-      msg: Hello, world!
-({% if 'instance' in morpheus %}{{ morpheus.instance | to_json | safe }}{% else %}{}{% endif %})
+      msg: |
+        Hello, world! 
+        {% if 'instance' in morpheus %}
+        {{ morpheus.instance | to_nice_json }}
+        {% else %}
+        No 'instance' key found in morpheus variable.
+        {% endif %}

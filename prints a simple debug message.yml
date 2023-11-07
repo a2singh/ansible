@@ -10,9 +10,9 @@
   - name: gather facts
     debug:
       msg: |
-        Hello, world! 
         {% if 'instance' in morpheus %}
-        {{ morpheus.instance | to_nice_json }}
+          {% set instance_data = morpheus.instance.decode('utf-8') %}
+          {{ instance_data | to_json | safe }}
         {% else %}
-        No 'instance' key found in morpheus variable.
+          {}
         {% endif %}

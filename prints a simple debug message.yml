@@ -12,7 +12,7 @@
       msg: |
         {% if 'instance' in morpheus %}
           {% set instance_data = morpheus.instance.decode('utf-8') %}
-          {{% instance_data | to_json | safe %}}
+          {{ instance_data | to_json | safe }}
         {% else %}
           {}
         {% endif %}

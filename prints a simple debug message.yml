@@ -1,6 +1,3 @@
-Your Ansible playbook appears to be mostly correct, but there's a small syntax issue with the `msg` line. Here's the corrected version of your playbook:
-
-```yaml
 ---
 # This playbook prints a simple debug message
 - name: Test morpheus variables 

@@ -3,4 +3,4 @@
   gather_facts: false
   tasks:
     - debug:
-        msg: "{{ morpheus | to_json }}"
+        msg: "{{ morpheus | to_nice_json }}"

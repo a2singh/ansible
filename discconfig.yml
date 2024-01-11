@@ -32,40 +32,4 @@
         label: "{{ item.label }}"
         size: 100%
         state: present
-        image_path: null  # or use an empty string ""
-      loop: "{{ data_disks }}"
----
-- name: Convert disk to dynamic, initialize disk, create partition, and format in NTFS
-  hosts: all
-  gather_facts: true
-  connection: winrm
-
-  vars:
-    data_disks:
-      - disk_number: 1
-        drive_letter: "D:"
-        label: data1
-      - disk_number: 2
-        drive_letter: "E:"
-        label: data2
-      - disk_number: 3
-        drive_letter: "F:"
-        label: data3
-      - disk_number: 4
-        drive_letter: "G:"
-        label: data4
-
-  tasks:
-    - name: Convert disk to dynamic
-      win_shell: |
-        Get-Disk | Where-Object IsOffline -Eq $True | ForEach-Object { Set-Disk $_.Number -IsOffline $False; Set-Disk $_.Number -IsReadOnly $False }
-
-    - name: Initialize and create partition
-      win_disk_image:
-        disk: "{{ item.disk_number }}"
-        filesystem: NTFS
-        drive_letter: "{{ item.drive_letter }}"
-        label: "{{ item.label }}"
-        size: 100%
-        state: present
       loop: "{{ data_disks }}"

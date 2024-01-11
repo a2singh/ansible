@@ -2,6 +2,7 @@
 - name: Convert disk to dynamic, initialize disk, create partition, and format in NTFS
   hosts: all
   gather_facts: true
+  connection: winrm
 
   vars:
     data_disks:
@@ -24,22 +25,11 @@
         Get-Disk | Where-Object IsOffline -Eq $True | ForEach-Object { Set-Disk $_.Number -IsOffline $False; Set-Disk $_.Number -IsReadOnly $False }
 
     - name: Initialize and create partition
-      win_partition:
-        disk_number: "{{ item.disk_number }}"
-        partition_style: gpt
-      loop: "{{ data_disks }}"
-
-    - name: Create partition using all available space
-      win_partition:
-        disk_number: "{{ item.disk_number }}"
-        partition_number: 1
-        size: 100%
-      loop: "{{ data_disks }}"
-
-    - name: Format partition in NTFS
-      win_format:
-        fs_type: NTFS
+      win_disk_image:
         disk: "{{ item.disk_number }}"
-        partition: 1
+        filesystem: NTFS
+        drive_letter: "{{ item.drive_letter }}"
         label: "{{ item.label }}"
+        size: 100%
+        state: present
       loop: "{{ data_disks }}"

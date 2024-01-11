@@ -2,8 +2,6 @@
 - name: Convert disk to dynamic, initialize disk, create partition, and format in NTFS
   hosts: all
   gather_facts: true
-  become: yes
-  connection: winrm  # Add this line to specify the connection method
 
   vars:
     data_disks:

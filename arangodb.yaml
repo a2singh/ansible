@@ -2,15 +2,16 @@
 - name: Install ArangoDB
   hosts: all
   vars:
-    proxy_url: "
-http://10.1.38.2:3128"
+    proxy_url: "http://10.1.38.2:3128"
   become: true
+
   pre_tasks:
     - name: Set up proxy for connection
       set_fact:
         http_proxy: "{{ proxy_url }}"
         https_proxy: "{{ proxy_url }}"
       delegate_to: localhost
+
   tasks:
     - name: Configure HTTP proxy for apt
       copy:
@@ -18,16 +19,18 @@ http://10.1.38.2:3128"
           Acquire::http::Proxy "{{ proxy_url }}";
           Acquire::https::Proxy "{{ proxy_url }}";
         dest: /etc/apt/apt.conf.d/95proxies
+
     - name: Configure HTTP proxy for the environment
       lineinfile:
         path: /etc/environment
         line: '{{ item }}'
         create: yes
-      with_items:
+      loop:
         - 'http_proxy={{ proxy_url }}'
         - 'https_proxy={{ proxy_url }}'
         - 'HTTP_PROXY={{ proxy_url }}'
         - 'HTTPS_PROXY={{ proxy_url }}'
+
     - name: Install required packages
       apt:
         name:
@@ -36,25 +39,27 @@ http://10.1.38.2:3128"
           - apt-transport-https
         state: present
         update_cache: yes
+
     - name: Add ArangoDB GPG key
       apt_key:
-        url:
-https://download.arangodb.com/arangodb312/DEBIAN/Release.key
+        url: https://download.arangodb.com/arangodb312/DEBIAN/Release.key
         state: present
+
     - name: Add ArangoDB repository
       apt_repository:
-        repo: "deb
-https://download.arangodb.com/arangodb312/DEBIAN/
-/"
+        repo: "deb https://download.arangodb.com/arangodb312/DEBIAN/ /"
         state: present
         filename: arangodb
+
     - name: Update apt cache
       apt:
         update_cache: yes
+
     - name: Install ArangoDB
       apt:
         name: arangodb3
         state: present
+
     - name: Enable and start ArangoDB service
       systemd:
         name: arangodb3

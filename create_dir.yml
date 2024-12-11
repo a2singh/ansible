@@ -2,7 +2,7 @@
 - name: Setup OS for GDC GKE on baremetal
   hosts: all
   gather_facts: false
-  become: false
+  become: true
   vars:
     sysctl:
       - name: fs.inotify.max_user_instances
@@ -12,19 +12,20 @@
 
   tasks:
 
-    - name: pwd
+    - name: Check current user
       ansible.builtin.command:
         cmd: whoami
       register: whoami
 
-    - name: print whoami
+    - name: Print current user
       ansible.builtin.debug:
-        msg: "{{ whoami }}"
+        msg: "Current user is: {{ whoami.stdout }}"
 
-    - name: Fix sshd key file permissions
+    - name: Fix SSH key file permissions
       ansible.builtin.shell:
-        chdir: /etc/ssh/
-        cmd: chmod 600 *key
+        cmd: chmod 600 /etc/ssh/*key
+      args:
+        executable: /bin/bash
 
     - name: Install required packages via apt
       ansible.builtin.apt:
@@ -41,7 +42,7 @@
           - scsitools
         update_cache: true
 
-    - name: "Set kernel parameters"
+    - name: Set kernel parameters
       ansible.posix.sysctl:
         name: "{{ item.name }}"
         value: "{{ item.value }}"
@@ -53,7 +54,7 @@
     - name: Create drop-in sub-directory for Systemd-timesyncd
       ansible.builtin.file:
         path: /etc/systemd/timesyncd.conf.d/
-        mode: 0755
+        mode: '0755'
         state: directory
 
     - name: Set NTP servers in Systemd-timesyncd
@@ -63,12 +64,10 @@
           [Time]
           NTP=time1.google.com time2.google.com
         create: true
-        mode: 0644
+        mode: '0644'
 
     - name: Restart Systemd-timesyncd service
       ansible.builtin.systemd:
-        unit: systemd-timesyncd.service
+        name: systemd-timesyncd.service
         state: restarted
         enabled: true
-
-which block is creating .ansible directory, i need only that party

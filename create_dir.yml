@@ -1,10 +1,11 @@
 ---
-- name: Create a Directory Without Privilege Escalation
+- name: Create a directory under /home/deepti without become
   hosts: all
-  become: false
   tasks:
-  - name: Create a directory named pratap
+  - name: Ensure /home/deepti/pratap directory exists
     file:
-      path: "~/pratap"
+      path: /home/deepti/pratap
       state: directory
+      owner: deepti
+      group: deepti
       mode: '0755'

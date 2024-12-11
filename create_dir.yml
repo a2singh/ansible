@@ -6,5 +6,6 @@
     file:
       path: /home/deepti/pratap
       state: directory
+      owner: deepti
+      group: deepti
       mode: '0755'
-    become: true

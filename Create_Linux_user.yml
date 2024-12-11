@@ -1,26 +1,10 @@
 ---
-- name: Create an Admin User
+- name: Create a Directory Without Privilege Escalation
   hosts: all
-  become: yes
+  become: false
   tasks:
-  - name: Create a user
-    user:
-      name: apsingh
-      groups: wheel
-      shell: /bin/bash
-      state: present
-  - name: Set the password for the user
-    user:
-      name: apsingh
-      password: "{{ 'apsingh_password_hash' | password_hash('sha512') }}"
-      state: present
-  - name: Grant sudo access to the user
-    lineinfile:
-      dest: /etc/sudoers
-      line: "apsingh  ALL=(ALL)  NOPASSWD:ALL"
-      state: present
-  - name: Ensure SSH access is enabled
-    lineinfile:
-      dest: /etc/ssh/sshd_config
-      line: "AllowUsers apsingh"
-      state: present
+  - name: Create a directory named pratap
+    file:
+      path: "~/pratap"
+      state: directory
+      mode: '0755'

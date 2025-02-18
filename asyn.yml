@@ -1,34 +1,15 @@
----
-- name: Test simple async command
-  hosts: all
-  gather_facts: false
+- name: Run an async task
+  ansible.builtin.yum:
+    name: docker-io
+    state: present
+  async: 1000
+  poll: 0
+  register: yum_sleeper
 
-  tasks:
-    - name: Run a simple async command (sleep for 10 seconds)
-      ansible.builtin.shell: "sleep 10 && echo 'Async complete'"
-      async: 30
-      poll: 0
-      register: async_result
-
-    - name: Debug async result
-      ansible.builtin.debug:
-        var: async_result
-
-    - name: Check if a job ID was returned
-      ansible.builtin.debug:
-        msg: "No job id returned from async task!"
-      when: async_result.ansible_job_id is not defined
-
-    - name: Wait for async job to finish (if job id exists)
-      ansible.builtin.async_status:
-        jid: "{{ async_result.ansible_job_id }}"
-      register: job_status
-      until: job_status.finished
-      retries: 5
-      delay: 3
-      when: async_result.ansible_job_id is defined
-
-    - name: Display async task output (if job id exists)
-      ansible.builtin.debug:
-        msg: "Async command output: {{ job_status }}"
-      when: async_result.ansible_job_id is defined
+- name: Check on an async task
+  async_status:
+    jid: "{{ yum_sleeper.ansible_job_id }}"
+  register: job_result
+  until: job_result.finished
+  retries: 100
+  delay: 10

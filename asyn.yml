@@ -1,12 +1,23 @@
 ---
-- name: Test async with Morpheus Ansible
+- name: Test simple async command
   hosts: all
   gather_facts: false
 
   tasks:
+    - name: Run a simple async command (sleep for 10 seconds)
+      ansible.builtin.shell: "sleep 10 && echo 'Async complete'"
+      async: 30
+      poll: 0
+      register: async_result
 
-    - name: Long running task
-      ansible.builtin.shell:
-        cmd: sleep 60
-      async: 120
-      poll: 3
+    - name: Wait for async job to finish
+      ansible.builtin.async_status:
+        jid: "{{ async_result.ansible_job_id }}"
+      register: job_status
+      until: job_status.finished
+      retries: 5
+      delay: 3
+
+    - name: Display async task output
+      ansible.builtin.debug:
+        msg: "Async command output: {{ job_status }}"

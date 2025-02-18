@@ -10,14 +10,25 @@
       poll: 0
       register: async_result
 
-    - name: Wait for async job to finish
+    - name: Debug async result
+      ansible.builtin.debug:
+        var: async_result
+
+    - name: Check if a job ID was returned
+      ansible.builtin.debug:
+        msg: "No job id returned from async task!"
+      when: async_result.ansible_job_id is not defined
+
+    - name: Wait for async job to finish (if job id exists)
       ansible.builtin.async_status:
         jid: "{{ async_result.ansible_job_id }}"
       register: job_status
       until: job_status.finished
       retries: 5
       delay: 3
+      when: async_result.ansible_job_id is defined
 
-    - name: Display async task output
+    - name: Display async task output (if job id exists)
       ansible.builtin.debug:
         msg: "Async command output: {{ job_status }}"
+      when: async_result.ansible_job_id is defined

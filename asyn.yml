@@ -4,6 +4,6 @@
   tasks:
     - name: Long running task
       ansible.builtin.command:
-        cmd: sleep 60
-      async: 120
-      poll: 40
+        cmd: sleep 5
+      async: 10
+      poll: 5

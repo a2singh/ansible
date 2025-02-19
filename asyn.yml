@@ -1,11 +1,11 @@
----
+--
+- name: Long running task
+  ansible.builtin.command:
+    cmd: sleep 60
+  async: 300
+  poll: 5
+  register: async_result
 
-- hosts: all
-  gather_facts: false
-
-  tasks:
-
-  - name: Simulate long running op (15 sec), wait for up to 45 sec, poll every 5 sec
-    ansible.builtin.command: /bin/sleep 15
-    async: 45
-    poll: 5
+- name: Debug async result
+  debug:
+    var: async_result

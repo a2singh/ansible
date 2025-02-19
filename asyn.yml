@@ -1,11 +1,9 @@
---
-- name: Long running task
-  ansible.builtin.command:
-    cmd: sleep 60
-  async: 300
-  poll: 5
-  register: async_result
-
-- name: Debug async result
-  debug:
-    var: async_result
+---
+- name: Test async with Morpheus Ansible
+  hosts: all
+  tasks:
+    - name: Long running task
+      ansible.builtin.command:
+        cmd: sleep 60
+      async: 300
+      poll: 5

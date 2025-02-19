@@ -5,5 +5,5 @@
     - name: Long running task
       ansible.builtin.command:
         cmd: sleep 15
-      async: 45
+      async: 300
       poll: 5

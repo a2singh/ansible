@@ -6,4 +6,4 @@
       ansible.builtin.command:
         cmd: sleep 60
       async: 120
-      poll: 0
+      poll: 3

@@ -4,7 +4,11 @@
   poll: 0
   register: async_result
 
-- name: Wait for async task to complete
+- name: Debug async job ID
+  ansible.builtin.debug:
+    msg: "Job ID is {{ async_result.ansible_job_id }}"
+
+- name: Wait for async task completion
   ansible.builtin.async_status:
     jid: "{{ async_result.ansible_job_id }}"
   register: job_result

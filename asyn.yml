@@ -2,15 +2,11 @@
 - name: Test async with Morpheus Ansible
   hosts: all
   gather_facts: false
-
+ 
   tasks:
-    - name: Start long-running task in background
-      ansible.builtin.shell: "nohup sleep 60 > /tmp/mytask.log 2>&1 & echo $! > /tmp/mytask.pid"
-      register: start_task
-
-    - name: Wait for task completion
-      ansible.builtin.shell: "ps -p $(cat /tmp/mytask.pid) || echo 'Process Completed'"
-      register: task_status
-      retries: 40   # Adjust based on expected runtime
-      delay: 3      # Check every 3 seconds
-      until: "'Process Completed' in task_status.stdout"
+ 
+    - name: Long running task
+      ansible.builtin.shell:
+        cmd: sleep 60
+      async: 120
+      poll: 3

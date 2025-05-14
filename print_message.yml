@@ -1,0 +1,8 @@
+---
+- name: Print a simple message
+  hosts: localhost
+  gather_facts: no
+  tasks:
+    - name: Print the message
+      debug:
+        msg: "Message from extra vars: {{ my_message }}"

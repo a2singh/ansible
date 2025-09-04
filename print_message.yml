@@ -1,8 +1,9 @@
----
 - name: Print a simple message
   hosts: localhost
-  gather_facts: no
+  connection: local
+  vars:
+    my_message: "Hello from Ansible!"
   tasks:
     - name: Print the message
       debug:
-        msg: "Message from extra vars: {{ my_message }}"
+        msg: "{{ my_message }}"

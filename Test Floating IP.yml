@@ -1,0 +1,8 @@
+---
+- name: Provision Floating IP
+  hosts: localhost
+  gather_facts: false
+  tasks:
+    - name: Simulate Floating IP assignment
+      debug:
+        msg: "Provisioning floating IP in lab..."

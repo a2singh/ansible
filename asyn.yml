@@ -1,12 +1,17 @@
+---
 - name: Deploy Application
   hosts: all
   gather_facts: no
- 
+
   tasks:
     - name: Show parameters received from Morpheus
       debug:
-        msg: "Deploying {{ user_input }} in {{ dg_environment_code }} for instance {{ instance_name }} (ID: {{ instance_id }})"
- 
+        msg: >
+          Deploying {{ morpheus['customOptions']['user_input'] }}
+          in {{ morpheus['customOptions']['dg_environment_code'] }}
+          for instance {{ morpheus['instance']['name'] }}
+          (ID: {{ morpheus['instance']['id'] }})
+
     - name: Run deployment
       shell: |
-        echo "Deploying {{ user_input }} to {{ dg_environment_code }}..."
+        echo "Deploying {{ morpheus['customOptions']['user_input'] }} to {{ morpheus['customOptions']['dg_environment_code'] }}..."

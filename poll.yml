@@ -1,10 +1,14 @@
 ---
-- name: Test user input via Extra Vars
+- name: Test user input via Morpheus
   hosts: localhost
   gather_facts: no
 
   tasks:
-    - name: Print message only if user_input is Yes
+    - name: Debug value for testing
+      debug:
+        var: user_input
+
+    - name: Print message only if user selected Yes
       debug:
         msg: "Hello! You selected Yes."
-      when: user_input == "Yes"
+      when: "'Yes' in user_input|string"

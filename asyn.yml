@@ -5,8 +5,8 @@
   tasks:
     - name: Show parameters received from Morpheus
       debug:
-        msg: "Deploying {{ user_input }} in {{ environment }} for instance {{ instance_name }} (ID: {{ instance_id }})"
+        msg: "Deploying {{ user_input }} in {{ dg_environment_code }} for instance {{ instance_name }} (ID: {{ instance_id }})"
  
     - name: Run deployment
       shell: |
-        echo "Deploying {{ user_input }} to {{ environment }}..."
+        echo "Deploying {{ user_input }} to {{ dg_environment_code }}..."

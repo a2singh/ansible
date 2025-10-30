@@ -6,9 +6,9 @@
   tasks:
     - name: Show what Morpheus actually passed
       debug:
-        var: user_input
+        var: morpheus['customOptions']
 
     - name: Print message only if user selected Yes
       debug:
         msg: "Hello! You selected Yes."
-      when: "'Yes' in user_input|string"
+      when: morpheus['customOptions']['user_input'] == "Yes"

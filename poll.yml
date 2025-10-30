@@ -1,19 +1,9 @@
 ---
-- name: Test async with Morpheus Ansible
-  hosts: all
+- name: Print a hardcoded Message of the Day
+  hosts: localhost
   gather_facts: false
 
   tasks:
-    - name: Start long-running task in background
-      ansible.builtin.shell: "sleep 60"
-      async: 65  # Maximum time allowed for the task to complete
-      poll: 5    # Check every 5 seconds
-      register: async_result
-
-    - name: Wait for task completion
-      ansible.builtin.async_status:
-        jid: "{{ async_result.ansible_job_id }}"
-      register: job_result
-      until: job_result.finished
-      retries: 40   # Adjust retries based on task duration
-      delay: 3      # Check every 3 seconds
+    - name: Show MOTD
+      ansible.builtin.debug:
+        msg: "Hello — this is the Message of the Day!"

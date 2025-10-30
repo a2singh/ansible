@@ -1,0 +1,9 @@
+---
+- name: Print a hardcoded Message of the Day
+  hosts: localhost
+  gather_facts: false
+
+  tasks:
+    - name: Show MOTD
+      ansible.builtin.debug:
+        msg: "Hello — this is the Message of the Day!"

@@ -1,9 +1,10 @@
 ---
-- name: Print a hardcoded Message of the Day
+- name: Test user input via Extra Vars
   hosts: localhost
-  gather_facts: false
+  gather_facts: no
 
   tasks:
-    - name: Show MOTD
-      ansible.builtin.debug:
-        msg: "Hello — this is the Message of the Day!"
+    - name: Print message only if user_input is Yes
+      debug:
+        msg: "Hello! You selected Yes."
+      when: user_input == "Yes"

@@ -7,11 +7,10 @@
     - name: Show parameters received from Morpheus
       debug:
         msg: >
-          Deploying {{ morpheus['customOptions']['user_input'] }}
-          in {{ morpheus['customOptions']['dg_environment_code'] }}
-          for instance {{ morpheus['instance']['name'] }}
-          (ID: {{ morpheus['instance']['id'] }})
+          Deploying {{ morpheus.customOptions.user_input }}
+          in {{ morpheus.customOptions.dg_environment_code }}
+          for instance {{ morpheus.instance.name }} (ID: {{ morpheus.instance.id }})
 
     - name: Run deployment
       shell: |
-        echo "Deploying {{ morpheus['customOptions']['user_input'] }} to {{ morpheus['customOptions']['dg_environment_code'] }}..."
+        echo "Deploying {{ morpheus.customOptions.user_input }} to {{ morpheus.customOptions.dg_environment_code }}..."

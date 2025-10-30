@@ -1,12 +1,12 @@
----
-- name: Test async with Morpheus Ansible
+- name: Deploy Application
   hosts: all
-  gather_facts: false
+  gather_facts: no
  
   tasks:
+    - name: Show parameters received from Morpheus
+      debug:
+        msg: "Deploying {{ user_input }} in {{ environment }} for instance {{ instance_name }} (ID: {{ instance_id }})"
  
-    - name: Long running task
-      ansible.builtin.shell:
-        cmd: sleep 60
-      async: 120
-      poll: 3
+    - name: Run deployment
+      shell: |
+        echo "Deploying {{ user_input }} to {{ environment }}..."

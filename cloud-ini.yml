@@ -1,0 +1,4 @@
+#cloud-config
+runcmd:
+  - echo "Customization script executed at $(date)" >> /var/log/morpheus_guest_custom.log
+  - env >> /var/log/morpheus_guest_custom.log

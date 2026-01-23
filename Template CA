@@ -1,0 +1,21 @@
+---
+- name: Test.
+  hosts: all
+  gather_subset:
+    - min
+
+  tasks:
+    - name: Template CA pem files
+      copy:
+        src: ../roles/test/files/katello
+        dest: /etc/rhsm/ca/katello.pem
+        mode: '0644'
+
+    - name: Write random file with ~3252 characters
+      copy:
+        dest: /tmp/random_3252.txt
+        content: "{{ lookup('password', '/dev/null length=3252 chars=ascii_letters,digits') }}"
+        mode: '0644'
+
+    - fail:
+        msg: test

@@ -1,7 +1,7 @@
 ---
 - name: Test.
   hosts: all
-  gather_subset:
+  gather_facts: false
     - min
 
   tasks:

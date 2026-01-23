@@ -1,13 +1,11 @@
----
-- name: Test.
+- name: Test
   hosts: all
   gather_facts: false
-    - min
 
   tasks:
     - name: Template CA pem files
       copy:
-        src: ../roles/test/files/katello
+        src: roles/test/files/katello
         dest: /etc/rhsm/ca/katello.pem
         mode: '0644'
 

@@ -1,0 +1,13 @@
+---
+- name: OPWB Debug copy issue
+  hosts: all
+  become: yes
+  tasks:
+
+    - name: Copy an 8KB text file
+      ansible.builtin.copy:
+        src: debug/t.txt
+        dest: /tmp/t.txt
+        owner: root
+        group: root
+        mode: "0644"

@@ -1,10 +1,9 @@
----
 - name: OPWB Debug copy issue
   hosts: all
-  become: yes
+  gather_facts: false   # Disable setup module
+  become: true
   tasks:
-
-    - name: Copy an 8KB text file
+    - name: Copy a 8KB text file
       ansible.builtin.copy:
         src: debug/t.txt
         dest: /tmp/t.txt

@@ -1,17 +1,14 @@
 ---
 - name: OPWB Debug copy issue
   hosts: all
-  gather_facts: false
   become: true
+  gather_facts: false
 
   tasks:
-    - name: Copy 8KB file from Morpheus app server to target
+    - name: Copy a 8KB text file from Morpheus Git checkout
       ansible.builtin.copy:
-        src: /home/asingh/debug/t.txt
+        src: debug/t.txt
         dest: /tmp/t.txt
         owner: root
         group: root
         mode: "0644"
-        remote_src: yes
-      delegate_to: localhost
-      become: false

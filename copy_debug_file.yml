@@ -10,7 +10,7 @@
     - name: Copy a 8KB text file from Morpheus Git checkout
       ansible.builtin.copy:
         src: debug/t.txt
-        dest: /tmp/t.txt
+        dest: /tmp/asingh.txt
         owner: root
         group: root
         mode: "0644"

@@ -5,9 +5,9 @@
   connection: local
 
   vars:
-    ansible_python_interpreter: /bin/python2
+    ansible_python_interpreter: /usr/bin/python3
 
-  # become: true   # Uncomment if you need sudo/root permissions
+  # become: true
 
   tasks:
     - name: Update apt package cache

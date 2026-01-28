@@ -1,6 +1,7 @@
 ---
 - name: OPWB Debug copy issue
   hosts: all
+  gather_facts: false
   become: true
 
   tasks:
